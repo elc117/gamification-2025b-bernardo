@@ -1,4 +1,23 @@
-java-libgdx-drop-example
-========================
+1. Click on 'Code', select 'Codespaces' and click '+' to create a Codespace on master
 
-The libGDX example application "Drop" from https://github.com/libgdx/libgdx/wiki/A-simple-game
+2. In the terminal of the recently created Codespace:
+
+    i. Update the Java version
+
+    ```bash
+    sdk install java 17.0.8-tem
+    sdk default java 17.0.8-tem
+    ```
+
+    ii. Build the HTML project
+
+    ```bash
+    ./gradlew html:dist
+    ```
+
+    iii. Run the HTML project
+
+    ```bash
+    cd html/build/dist
+    python -m http.server
+    ```
