@@ -150,7 +150,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		rainMusic.play();
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

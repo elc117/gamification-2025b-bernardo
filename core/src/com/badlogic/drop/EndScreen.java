@@ -5,14 +5,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-public class MainMenuScreen implements Screen {
-	final Drop game;
+public class EndScreen implements Screen {
+    final Drop game;
+
 	static private int WIDTH = 800;
 	static private int HEIGHT = 480;
 	
 	OrthographicCamera camera;
-	
-	public MainMenuScreen(final Drop passed_game) {
+
+	public EndScreen(final Drop passed_game) {
 		game = passed_game;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
@@ -20,21 +21,23 @@ public class MainMenuScreen implements Screen {
 	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.6f, 0.8f, 0.6f, 1);
+        Gdx.gl.glClearColor(0.6f, 0.8f, 0.6f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 		
 		game.batch.begin();
-		game.font.draw(game.batch, "Clique em qualquer lugar para jogar", 100, 300);
+		game.font.draw(game.batch, "Pontuação final: 0 / 15", 100, 400);
+		game.font.draw(game.batch, "Clique para jogar novamente", 100, 300);
 		game.batch.end();
-		
+
 		// If player activates the game, dispose of this menu.
 		if (Gdx.input.isTouched()) {
 			game.setScreen(new GameScreen(game));
 			dispose();
 		}
+
 	}
 
 
