@@ -19,52 +19,55 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen implements Screen {
-	final Drop game;
+	final Drop jogo;
 	
-	Texture dropImage;
-	Texture bucketImage;
-	Sound dropSound;
-	Music rainMusic;
+	Reciclagem lixeiraAzul;
+	Reciclagem lixeiraVerde;
+	Reciclagem lixeiraMarrom;
+	Reciclagem lixeiraVermelha;
+	ListaReciclagem residuos;
+	Reciclagem residuoAtual;
+	Sound somAcerto;
+	Sound somErro;
+
 	OrthographicCamera camera;
 	SpriteBatch batch;
-	Rectangle bucket;
 	Vector3 touchPos;
-	Array<Rectangle> raindrops;
-	long lastDropTime;
-	int dropsGathered;
+	long tempo;
+	int pontos;
+	int indice;
 	
 	public GameScreen(final Drop passed_game) {
-		game = passed_game; 
+		jogo = passed_game; 
 		
-		// Load images, 64px each
-		dropImage = new Texture(Gdx.files.internal("droplet.png"));
-		bucketImage = new Texture(Gdx.files.internal("bucket.png"));
+		lixeiraAzul = new Reciclagem(new Texture (Gdx.files.internal("lixeira-azul.png")), new Rectangle(), "papel");
+		lixeiraVerde = new Reciclagem(new Texture (Gdx.files.internal("lixeira-verde.png")), new Rectangle(), "vidro");
+		lixeiraMarrom = new Reciclagem(new Texture (Gdx.files.internal("lixeira-marrom.png")), new Rectangle(), "organico");
+		lixeiraVermelha = new Reciclagem(new Texture (Gdx.files.internal("lixeira-vermelha.png")), new Rectangle(), "plastico");
+
 		
-		// Load the drop sfx and the rain background music
-		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+		// Carrega os sons de acerto e erro
+		somAcerto = Gdx.audio.newSound(Gdx.files.internal("correct-answer.mp3"));
+		somErro = Gdx.audio.newSound(Gdx.files.internal("wrong-answer.mp3"));
 		
-		// Start playback of music in bg
-		rainMusic.setLooping(true);
-		rainMusic.play();
-		
-		// Init the camera objects.
+	
+		// Inicializa câmera
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		touchPos = new Vector3();
 		
 		batch = new SpriteBatch();
 		
-		bucket = new Rectangle();
-		// Screen Width - Image Width 
-		bucket.width = 64;
-		bucket.x = 800 / 2 - bucket.width / 2;
-		bucket.y = 20;
-		bucket.height = 64;
-		
-		// Create Raindrops and spawn the first one.
-		raindrops = new Array<Rectangle>();
-		spawnRaindrop();
+	
+		// Cria os resíduos
+		residuos = new ListaReciclagem();
+		residuos.adicionarElementos();
+		residuos.embaralhar();
+
+		// Escolhe o primeiro e mostra na tela
+		indice = 0;
+		residuoAtual = residuos.elemento(indice);
+		spawnResiduo(residuoAtual);
 	}
 
 	@Override
@@ -76,69 +79,112 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		
-		game.batch.setProjectionMatrix(camera.combined);
-		game.batch.begin();
-		game.font.draw(game.batch, "Drops Collected: " + dropsGathered, 0, 400);
-		// Draw the bucket and all the drops.
-		game.batch.draw(bucketImage, bucket.x, bucket.y);
-		for (Rectangle raindrop: raindrops) {
-			game.batch.draw(dropImage, raindrop.x, raindrop.y);
-		}
-		game.batch.end();
+		jogo.batch.setProjectionMatrix(camera.combined);
+		jogo.batch.begin();
+		jogo.font.draw(jogo.batch, "Drops Collected: " + pontos, 0, 400);
+
+		// Desenha as lixeiras
+		jogo.batch.draw(lixeiraAzul.imagem, lixeiraAzul.objeto.x, lixeiraAzul.objeto.y);
+		jogo.batch.draw(lixeiraVerde.imagem, lixeiraVerde.objeto.x, lixeiraVerde.objeto.y);
+		jogo.batch.draw(lixeiraMarrom.imagem, lixeiraMarrom.objeto.x, lixeiraMarrom.objeto.y);
+		jogo.batch.draw(lixeiraVermelha.imagem, lixeiraVermelha.objeto.x, lixeiraVermelha.objeto.y);
+
+		// Desenha o resíduo atual
+		jogo.batch.draw(residuoAtual.imagem, residuoAtual.objeto.x, residuoAtual.objeto.y);
+
+		jogo.batch.end();
 		
-		// Process any user input
+		// Processa movimento com o mouse
 		if (Gdx.input.isTouched()) {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			bucket.x = touchPos.x - bucket.width / 2;
+			residuoAtual.objeto.x = touchPos.x - residuoAtual.objeto.width / 2;
 		}
 		
-		// Ensure that the bucket's within the screen bounds
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) 
-			bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) 
-			bucket.x += 200 * Gdx.graphics.getDeltaTime();
-		if (bucket.x < 0) 
-			bucket.x = 0;
-		if (bucket.x > 800 - bucket.width) 
-			bucket.x = 800 - bucket.width;
+		// Processa movimento com o teclado
+		if (Gdx.input.isKeyPressed(Keys.S)) 
+			residuoAtual.objeto.x = 100;
+		if (Gdx.input.isKeyPressed(Keys.D)) 
+			residuoAtual.objeto.x = 200;
+		if (Gdx.input.isKeyPressed(Keys.J))
+			residuoAtual.objeto.x = 300;
+		if (Gdx.input.isKeyPressed(Keys.K))
+			residuoAtual.objeto.x = 400;
+
+
+		// Impede que ultrapasse o limite da tela
+		if (residuoAtual.objeto.x < 0) 
+			residuoAtual.objeto.x = 0;
+		if (residuoAtual.objeto.x > 800 - residuoAtual.objeto.width) 
+			residuoAtual.objeto.x = 800 - residuoAtual.objeto.width;
 		
-		// Check time since last raindrop. Do we need another?
-		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) 
-			spawnRaindrop();
-		
-		// Update all the raindrops
-		Iterator<Rectangle> iter = raindrops.iterator();
-		while (iter.hasNext()) {
-			Rectangle raindrop = iter.next();
-			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-			if (raindrop.y + raindrop.height < 0) 
-				iter.remove();
-			if (raindrop.overlaps(bucket)) {
-				dropsGathered++;
-				dropSound.play();
-				iter.remove();
+		// Verifica se precisa atualizar as lixeiras e mudar o resíduo
+		if (TimeUtils.nanoTime() - tempo > 1000000000) {
+			lixeiraAzul.objeto.y = 400;
+			lixeiraVerde.objeto.y = 400;
+			lixeiraMarrom.objeto.y = 400;
+			lixeiraVermelha.objeto.y = 400;
+			indice++;
+			residuoAtual = residuos.elemento(indice);
+			spawnResiduo(residuoAtual);
+		}
+
+		// Move as lixeiras para baixo
+		lixeiraAzul.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
+		lixeiraVerde.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
+		lixeiraMarrom.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
+		lixeiraVermelha.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
+
+		// Verifica se acertou e lida com a colisão
+		verificarELidarColisao(residuoAtual, lixeiraAzul);
+		verificarELidarColisao(residuoAtual, lixeiraVerde);
+		verificarELidarColisao(residuoAtual, lixeiraMarrom);
+		verificarELidarColisao(residuoAtual, lixeiraVermelha);
+	}
+
+	private void spawnResiduo(Reciclagem r) {
+		r.objeto.x = 368;
+		r.objeto.y = 20;
+		r.objeto.width = 64;
+		r.objeto.height = 64;
+		tempo = TimeUtils.nanoTime();
+	}
+
+	private void verificarELidarColisao(Reciclagem residuo, Reciclagem lixeira) {
+		if (residuo.objeto.overlaps(lixeira.objeto)) {
+			if (residuo.tipo.equals(lixeira.tipo)) {
+				somAcerto.play();
+				pontos++;
 			}
+			else {
+				somErro.play();
+			}
+			
+			// Remove da tela
+			residuo.objeto.y -= 100;
+
+			// Gera o próximo resíduo
+			indice++;
+			if (indice >= residuos.tamanho()) {
+				jogo.setScreen(new EndScreen(jogo, pontos));
+				dispose();
+				return;
+			}
+			residuoAtual = residuos.elemento(indice);
+			spawnResiduo(residuoAtual);
 		}
 	}
-	
-	private void spawnRaindrop() {
-		Rectangle raindrop = new Rectangle();
-		raindrop.x = MathUtils.random(0, 800-64);
-		raindrop.y = 480;
-		raindrop.width = 64;
-		raindrop.height = 64;
-		raindrops.add(raindrop);
-		lastDropTime = TimeUtils.nanoTime();
-	}
-	
+
 	@Override
 	public void dispose() {
 		// Clear all the "native" resources
-		dropImage.dispose();
-		bucketImage.dispose();
-		dropSound.dispose();
-		rainMusic.dispose();
+		// Libera (alguma coisa)
+		// lixeiraAzul.dispose();
+		// lixeiraVerde.dispose();
+		// lixeiraVermelha.dispose();
+		// lixeiraMarrom.dispose();
+		somAcerto.dispose();
+		somErro.dispose();
 		batch.dispose();
 	}
 

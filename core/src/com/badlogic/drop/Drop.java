@@ -13,12 +13,12 @@ public class Drop extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new EndScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
 	public void render () {
-		super.render(); // important!
+		super.render();
 	}
 	
 	public void dispose() {
