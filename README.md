@@ -11,9 +11,13 @@ e o que as classes que eu teria que implementar iriam fazer (caso da classe Reci
 
 Comecei a criar o jogo com base no jogo do balde. Usei partes do que já existia para implementar o que eu preciso para meu jogo. Isso também me ajudou bastante a entender
 melhor os métodos (e funcionamento, de maneira geral) do libGDX.
+
 Adicionei as classes `Reciclagem`, `EndScreen` e `ListaReciclagem` (mas não dei commit no dia 10 para `ListaReciclagem`).
+
 A classe Reciclagem representa tanto as lixeiras quanto os resíduos. Decidi fazer dessa maneira porque a lixera e os resíduos teriam os mesmos atributos.
+
 A classe EndScreen é para mostrar a pontuação final do jogador quando o jogo acabar e possibilitar jogar novamente.
+
 A classe ListaReciclagem foi feita para simular a lista de resíduos que aparecem na tela, bem como a ordem que aparecem.
 
 ## 12/11/25
