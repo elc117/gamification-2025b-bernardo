@@ -26,7 +26,9 @@ quais classes). Após arrumar todos erros, criei os métodos `spawnResiduo` e `v
 Aso testar o jogo, não estava dando certo para sair da tela inicial. Esse bug foi resolvido com ajuda de IA. Segundo ela, isso poderia ser devido a uma imagem não estar sendo
 encontrada. De fato, eu tinha escrito `embalagem.png` no arquivo ListaReciclagem.java e na pasta `assets` estava `embalagem.jpg`. Corrigido isso, o jogo estava rodando, embora
 com as figuras com tamanhos muito maiores do que deveria.
-
+<img src="https://github.com/user-attachments/assets/ffe8ef73-9c5b-417c-8010-1fa0a3c524fc"
+     alt="Tela do jogo"
+     width="900" />
 
 ## Instruções para rodar o jogo
 
