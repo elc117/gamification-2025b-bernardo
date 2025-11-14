@@ -32,7 +32,7 @@ public class MainMenuScreen implements Screen {
 		// If player activates the game, dispose of this menu.
 		if (Gdx.input.isTouched()) {
 			jogo.setScreen(new GameScreen(jogo));
-			// dispose();
+			dispose();
 		}
 
 	}

@@ -84,13 +84,13 @@ public class GameScreen implements Screen {
 		jogo.font.draw(jogo.batch, "Drops Collected: " + pontos, 0, 400);
 
 		// Desenha as lixeiras
-		jogo.batch.draw(lixeiraAzul.imagem, lixeiraAzul.objeto.x, lixeiraAzul.objeto.y);
-		jogo.batch.draw(lixeiraVerde.imagem, lixeiraVerde.objeto.x, lixeiraVerde.objeto.y);
-		jogo.batch.draw(lixeiraMarrom.imagem, lixeiraMarrom.objeto.x, lixeiraMarrom.objeto.y);
-		jogo.batch.draw(lixeiraVermelha.imagem, lixeiraVermelha.objeto.x, lixeiraVermelha.objeto.y);
+		jogo.batch.draw(lixeiraAzul.imagem, lixeiraAzul.objeto.x, lixeiraAzul.objeto.y, lixeiraAzul.objeto.width, lixeiraAzul.objeto.height);
+		jogo.batch.draw(lixeiraVerde.imagem, lixeiraVerde.objeto.x, lixeiraVerde.objeto.y, lixeiraVerde.objeto.width, lixeiraVerde.objeto.height);
+		jogo.batch.draw(lixeiraMarrom.imagem, lixeiraMarrom.objeto.x, lixeiraMarrom.objeto.y, lixeiraMarrom.objeto.width, lixeiraMarrom.objeto.height);
+		jogo.batch.draw(lixeiraVermelha.imagem, lixeiraVermelha.objeto.x, lixeiraVermelha.objeto.y, lixeiraVermelha.objeto.width, lixeiraVermelha.objeto.height);
 
 		// Desenha o resíduo atual
-		jogo.batch.draw(residuoAtual.imagem, residuoAtual.objeto.x, residuoAtual.objeto.y);
+		jogo.batch.draw(residuoAtual.imagem, residuoAtual.objeto.x, residuoAtual.objeto.y, residuoAtual.objeto.width, residuoAtual.objeto.height);
 
 		jogo.batch.end();
 		
