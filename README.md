@@ -30,8 +30,7 @@ quais classes). Após arrumar todos erros, criei os métodos `spawnResiduo` e `v
 Aso testar o jogo, não estava dando certo para sair da tela inicial. Esse bug foi resolvido com ajuda de IA. Segundo ela, isso poderia ser devido a uma imagem não estar sendo
 encontrada. De fato, eu tinha escrito `embalagem.png` no arquivo ListaReciclagem.java e na pasta `assets` estava `embalagem.jpg`. Corrigido isso, o jogo estava rodando, embora
 com as figuras com tamanhos muito maiores do que deveria.
-<img src="https://github.com/user-attachments/as![video1](https://github.com/user-attachments/assets/f4e94c2b-f254-4e3b-aac6-b47270a07f00)
-sets/ffe8ef73-9c5b-417c-8010-1fa0a3c524fc"
+<img src="https://github.com/user-attachments/assets/ffe8ef73-9c5b-417c-8010-1fa0a3c524fc"
      alt="Tela do jogo"
      width="900" />
 
@@ -41,7 +40,7 @@ Analisando o código do jogo "A simple game", percebi que para desenhar algo na 
 Assim, corrigi os trechos com `jogo.batch.draw()` especificando uma altura e largura.
 
 Quando rodei o jogo, percebi que as lixeiras não estavam sendo reposicionadas corretamente, como mostra o vídeo abaixo.
-![Uploading video1.gif…]()
+![video1](https://github.com/user-attachments/assets/b89bd1da-8b8d-4f82-a8b7-c4b447793d9d)
 
 Para resolver, criei um método `reposicionaLixeira()` e removi um trecho de código que controlava o tempo que as lixeiras demoravam para cair.
 ![video2](https://github.com/user-attachments/assets/76e79323-0bed-4a1a-97fa-9086b82cb17c)
