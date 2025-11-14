@@ -33,7 +33,6 @@ public class GameScreen implements Screen {
 	OrthographicCamera camera;
 	SpriteBatch batch;
 	Vector3 touchPos;
-	long tempo;
 	int pontos;
 	int indice;
 	
@@ -41,15 +40,15 @@ public class GameScreen implements Screen {
 		jogo = passed_game; 
 		pontos = 0;
 
-		lixeiraAzul = new Reciclagem(new Texture (Gdx.files.internal("lixeira-azul.png")), new Rectangle(), "papel");
-		lixeiraVerde = new Reciclagem(new Texture (Gdx.files.internal("lixeira-verde.png")), new Rectangle(), "vidro");
-		lixeiraMarrom = new Reciclagem(new Texture (Gdx.files.internal("lixeira-marrom.png")), new Rectangle(), "organico");
-		lixeiraVermelha = new Reciclagem(new Texture (Gdx.files.internal("lixeira-vermelha.png")), new Rectangle(), "plastico");
+		lixeiraAzul = new Reciclagem(new Texture (Gdx.files.internal("lixeira_azul.png")), new Rectangle(), "papel");
+		lixeiraVerde = new Reciclagem(new Texture (Gdx.files.internal("lixeira_verde.png")), new Rectangle(), "vidro");
+		lixeiraMarrom = new Reciclagem(new Texture (Gdx.files.internal("lixeira_marrom.png")), new Rectangle(), "organico");
+		lixeiraVermelha = new Reciclagem(new Texture (Gdx.files.internal("lixeira_vermelha.png")), new Rectangle(), "plastico");
 
 		
 		// Carrega os sons de acerto e erro
-		somAcerto = Gdx.audio.newSound(Gdx.files.internal("correct-answer.mp3"));
-		somErro = Gdx.audio.newSound(Gdx.files.internal("wrong-answer.mp3"));
+		somAcerto = Gdx.audio.newSound(Gdx.files.internal("resposta_certa.mp3"));
+		somErro = Gdx.audio.newSound(Gdx.files.internal("resposta_errada.mp3"));
 		
 	
 		// Inicializa câmera
@@ -82,7 +81,7 @@ public class GameScreen implements Screen {
 		
 		jogo.batch.setProjectionMatrix(camera.combined);
 		jogo.batch.begin();
-		jogo.font.draw(jogo.batch, "Acertos: " + pontos + " / 15",  0, 400);
+		jogo.font.draw(jogo.batch, "Acertos: " + pontos + " / " + residuos.tamanho(),  0, 400);
 
 		// Desenha as lixeiras
 		jogo.batch.draw(lixeiraAzul.imagem, lixeiraAzul.objeto.x, lixeiraAzul.objeto.y, lixeiraAzul.objeto.width, lixeiraAzul.objeto.height);
@@ -119,15 +118,16 @@ public class GameScreen implements Screen {
 		if (residuoAtual.objeto.x > 800 - residuoAtual.objeto.width) 
 			residuoAtual.objeto.x = 800 - residuoAtual.objeto.width;
 		
-		
+
 		// Move as lixeiras para baixo
-		lixeiraAzul.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
-		lixeiraVerde.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
-		lixeiraMarrom.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
-		lixeiraVermelha.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
+		lixeiraAzul.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
+		lixeiraVerde.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
+		lixeiraMarrom.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
+		lixeiraVermelha.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
 
 		// Verifica se chegou no final da tela
 		if (lixeiraAzul.objeto.y < -64) {
+			somErro.play();
 			reposicionaLixeiras();
 			indice++;
 			residuoAtual = residuos.elemento(indice);
@@ -149,11 +149,10 @@ public class GameScreen implements Screen {
 	}
 
 	private void spawnResiduo(Reciclagem r) {
-		r.objeto.x = 368;
-		r.objeto.y = 20;
+		r.objeto.x = 500;
+		r.objeto.y = 40;
 		r.objeto.width = 64;
 		r.objeto.height = 64;
-		tempo = TimeUtils.nanoTime();
 	}
 
 	private void verificarELidarColisao(Reciclagem residuo, Reciclagem lixeira) {
@@ -171,7 +170,7 @@ public class GameScreen implements Screen {
 
 			// Gera o próximo resíduo
 			indice++;
-			if (indice > residuos.tamanho()) {
+			if (indice == residuos.tamanho()) {
 				dispose();
 				jogo.setScreen(new EndScreen(jogo, pontos));
 				return;

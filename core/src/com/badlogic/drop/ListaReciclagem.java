@@ -31,6 +31,7 @@ public class ListaReciclagem {
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("maca.png")), new Rectangle(), "organico", 500, 40));
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("ovo.png")), new Rectangle(), "organico", 500, 40));
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("folha.png")), new Rectangle(), "organico", 500, 40));
+        lista.add(new Reciclagem(new Texture (Gdx.files.internal("banana.png")), new Rectangle(), "organico", 500, 40));
 
 
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("tampa_garrafa.png")), new Rectangle(), "plastico", 500, 40));
