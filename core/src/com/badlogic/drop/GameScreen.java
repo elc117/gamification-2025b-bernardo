@@ -39,7 +39,8 @@ public class GameScreen implements Screen {
 	
 	public GameScreen(final Drop passed_game) {
 		jogo = passed_game; 
-		
+		pontos = 0;
+
 		lixeiraAzul = new Reciclagem(new Texture (Gdx.files.internal("lixeira-azul.png")), new Rectangle(), "papel");
 		lixeiraVerde = new Reciclagem(new Texture (Gdx.files.internal("lixeira-verde.png")), new Rectangle(), "vidro");
 		lixeiraMarrom = new Reciclagem(new Texture (Gdx.files.internal("lixeira-marrom.png")), new Rectangle(), "organico");
@@ -75,13 +76,13 @@ public class GameScreen implements Screen {
 		/* Clear screen with a dark blue color.
 		 * Arguments to ClearColor are r g b, alpha
 		 */
-		Gdx.gl.glClearColor(0, 0, .2f, 1);
+		Gdx.gl.glClearColor(0.95f, 0.8f, 0.6f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		
 		jogo.batch.setProjectionMatrix(camera.combined);
 		jogo.batch.begin();
-		jogo.font.draw(jogo.batch, "Drops Collected: " + pontos, 0, 400);
+		jogo.font.draw(jogo.batch, "Acertos: " + pontos + " / 15",  0, 400);
 
 		// Desenha as lixeiras
 		jogo.batch.draw(lixeiraAzul.imagem, lixeiraAzul.objeto.x, lixeiraAzul.objeto.y, lixeiraAzul.objeto.width, lixeiraAzul.objeto.height);
@@ -118,28 +119,33 @@ public class GameScreen implements Screen {
 		if (residuoAtual.objeto.x > 800 - residuoAtual.objeto.width) 
 			residuoAtual.objeto.x = 800 - residuoAtual.objeto.width;
 		
-		// Verifica se precisa atualizar as lixeiras e mudar o resíduo
-		if (TimeUtils.nanoTime() - tempo > 1000000000) {
-			lixeiraAzul.objeto.y = 400;
-			lixeiraVerde.objeto.y = 400;
-			lixeiraMarrom.objeto.y = 400;
-			lixeiraVermelha.objeto.y = 400;
+		
+		// Move as lixeiras para baixo
+		lixeiraAzul.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
+		lixeiraVerde.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
+		lixeiraMarrom.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
+		lixeiraVermelha.objeto.y -= 100 * Gdx.graphics.getDeltaTime();
+
+		// Verifica se chegou no final da tela
+		if (lixeiraAzul.objeto.y < -64) {
+			reposicionaLixeiras();
 			indice++;
 			residuoAtual = residuos.elemento(indice);
 			spawnResiduo(residuoAtual);
 		}
-
-		// Move as lixeiras para baixo
-		lixeiraAzul.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
-		lixeiraVerde.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
-		lixeiraMarrom.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
-		lixeiraVermelha.objeto.y -= 300 * Gdx.graphics.getDeltaTime();
 
 		// Verifica se acertou e lida com a colisão
 		verificarELidarColisao(residuoAtual, lixeiraAzul);
 		verificarELidarColisao(residuoAtual, lixeiraVerde);
 		verificarELidarColisao(residuoAtual, lixeiraMarrom);
 		verificarELidarColisao(residuoAtual, lixeiraVermelha);
+	}
+
+	private void reposicionaLixeiras() {
+		lixeiraAzul.objeto.y = 400;
+		lixeiraVerde.objeto.y = 400;
+		lixeiraMarrom.objeto.y = 400;
+		lixeiraVermelha.objeto.y = 400;
 	}
 
 	private void spawnResiduo(Reciclagem r) {
@@ -165,11 +171,12 @@ public class GameScreen implements Screen {
 
 			// Gera o próximo resíduo
 			indice++;
-			if (indice >= residuos.tamanho()) {
-				jogo.setScreen(new EndScreen(jogo, pontos));
+			if (indice > residuos.tamanho()) {
 				dispose();
+				jogo.setScreen(new EndScreen(jogo, pontos));
 				return;
 			}
+			reposicionaLixeiras();
 			residuoAtual = residuos.elemento(indice);
 			spawnResiduo(residuoAtual);
 		}
