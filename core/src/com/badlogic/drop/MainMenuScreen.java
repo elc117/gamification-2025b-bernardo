@@ -27,6 +27,7 @@ public class MainMenuScreen implements Screen {
 		
 		jogo.batch.begin();
 		jogo.font.draw(jogo.batch, "Clique em qualquer lugar para jogar", 100, 300);
+		jogo.font.draw(jogo.batch, "Use o mouse ou as teclas S, D, J, K para mover o resíduo até a lixeira correta", 100, 200);
 		jogo.batch.end();
 		
 		// If player activates the game, dispose of this menu.

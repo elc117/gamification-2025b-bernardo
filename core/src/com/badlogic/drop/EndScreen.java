@@ -30,7 +30,7 @@ public class EndScreen implements Screen {
 		jogo.batch.setProjectionMatrix(camera.combined);
 		
 		jogo.batch.begin();
-		jogo.font.draw(jogo.batch, "Pontuação final: " + pontuacaoFinal + " / " + residuos.tamanho(), 100, 400);
+		jogo.font.draw(jogo.batch, "Pontuação final: " + pontuacaoFinal, 100, 400);
 		jogo.font.draw(jogo.batch, "Clique para jogar novamente", 100, 300);
 		jogo.batch.end();
 
