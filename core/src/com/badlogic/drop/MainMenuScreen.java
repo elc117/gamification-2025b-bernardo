@@ -4,11 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 
 public class MainMenuScreen implements Screen {
 	final Drop jogo;
 	static private int WIDTH = 800;
 	static private int HEIGHT = 480;
+
+	Texture imagemTutorial;
+	Texture imagemJogar;
+	Rectangle botaoTutorial;
+	Rectangle botaoJogar;
 	
 	OrthographicCamera camera;
 	
@@ -26,14 +34,26 @@ public class MainMenuScreen implements Screen {
 		jogo.batch.setProjectionMatrix(camera.combined);
 		
 		jogo.batch.begin();
-		jogo.font.draw(jogo.batch, "Clique em qualquer lugar para jogar", 100, 300);
-		jogo.font.draw(jogo.batch, "Use o mouse ou as teclas S, D, J, K para mover o resíduo até a lixeira correta", 100, 200);
+		jogo.batch.draw(imagemJogar, botaoJogar.x, botaoJogar.y, botaoJogar.width, botaoJogar.height);
+		jogo.batch.draw(imagemTutorial, botaoTutorial.x, botaoTutorial.y, botaoTutorial.width, botaoTutorial.height);
 		jogo.batch.end();
 		
-		// If player activates the game, dispose of this menu.
+		// Verifica se uma das opções foi clicada
 		if (Gdx.input.isTouched()) {
-			jogo.setScreen(new GameScreen(jogo));
-			dispose();
+			// Pega a posição do clique
+			Vector3 posicao = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(posicao);
+
+			if (botaoJogar.contains(posicao.x, posicao.y)) {
+				jogo.setScreen(new GameScreen(jogo));
+				dispose();
+			}
+
+			if (botaoTutorial.contains(posicao.x, posicao.y)) {
+				jogo.setScreen(new TutorialScreen(jogo));
+				dispose();
+			}
+
 		}
 
 	}
@@ -47,7 +67,11 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		imagemJogar = new Texture(Gdx.files.internal("img_jogar.png"));
+		botaoJogar = new Rectangle(100, 300, 200, 80);
+
+		imagemTutorial = new Texture(Gdx.files.internal("img_tutorial.png"));
+		botaoTutorial = new Rectangle(100, 200, 200, 80);
 		
 	}
 
