@@ -1,3 +1,7 @@
+## Identificação
+Bernardo Trentin Bottega
+Ciência da Computação
+
 ## 06 - 09/11/25
 
 Usei esses 3 dias para arrumar arquivos do repositório e aprender como o libGDX funciona. Algumas dificuldades que tive foram: entender como a biblioteca funciona
@@ -45,6 +49,25 @@ Quando rodei o jogo, percebi que as lixeiras não estavam sendo reposicionadas c
 Para resolver, criei um método `reposicionaLixeira()` e removi um trecho de código que controlava o tempo que as lixeiras demoravam para cair.
 ![video2](https://github.com/user-attachments/assets/76e79323-0bed-4a1a-97fa-9086b82cb17c)
 
+## 19/11/25
+
+Adicionei uma tela para um tutorial simples do jogo e criei alguns botões para permitir a navegação entre telas.
+Na tela de menu adicionei dois botões: um para jogar e outro para ler o tutorial.
+Na tela do tutorial, adicionei um para voltar à tela de menu.
+Na tela final, adicionei um para voltar à tela de menu.
+
+Tela de menu:
+<img width="900" height="600" alt="Tela de menu" src="https://github.com/user-attachments/assets/ac08e674-1c79-463a-b55e-483cd459c1b4" />
+
+Tela do tutorial:
+<img width="900" height="600" alt="Tela tutorial" src="https://github.com/user-attachments/assets/b61c32c8-ba45-4790-855e-e9a5c28f0455" />
+
+
+Os botões foram criados de maneira mais "manual", sem usar o rescurso `Button` disponível pelo libgdx. Preferi dessa maneira por parecer mais simples
+e atender bem a necessidade de cada botão para o jogo.
+Eles foram feitos com uma imagem e com detecção de clique na tela. Se o usuário clicar numa posição que contenhaa a imagem, o botão foi clicado.
+Essa ideia de não usar o `Button` e fazer de maneira manual foi dada pela IA depois de eu pedir algo simples para criar um botão. Ela me forneceu um
+exemplo genérico de uso e eu adaptei para meu código.
 
 ## Instruções para rodar o jogo
 
