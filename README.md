@@ -61,6 +61,7 @@ Tela de menu:
 
 <img width="900" height="600" alt="Tela de menu" src="https://github.com/user-attachments/assets/ac08e674-1c79-463a-b55e-483cd459c1b4" />
 
+
 Tela do tutorial:
 
 <img width="900" height="600" alt="Tela tutorial" src="https://github.com/user-attachments/assets/b61c32c8-ba45-4790-855e-e9a5c28f0455" />
@@ -69,9 +70,11 @@ Tela do tutorial:
 Os botões foram criados de maneira mais "manual", sem usar o rescurso `Button` disponível pelo libgdx. Preferi dessa maneira por parecer mais simples
 e atender bem a necessidade de cada botão para o jogo.
 
-Eles foram feitos com uma imagem e com detecção de clique na tela. Se o usuário clicar numa posição que contenhaa a imagem, o botão foi clicado.
+Eles foram feitos com uma imagem e com detecção de clique na tela. Se o usuário clicar numa posição que contenha a imagem, o botão foi clicado.
+
 Essa ideia de não usar o `Button` e fazer de maneira manual foi dada pela IA depois de eu pedir algo simples para criar um botão. Ela me forneceu um
 exemplo genérico de uso e eu adaptei para meu código.
+
 
 ## Instruções para rodar o jogo
 
