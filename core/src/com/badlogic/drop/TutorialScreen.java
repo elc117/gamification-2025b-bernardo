@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
+
 
 class TutorialScreen implements Screen {
     final Drop jogo;
@@ -12,6 +16,15 @@ class TutorialScreen implements Screen {
     private int HEIGHT = 480;
 
     OrthographicCamera camera;
+
+	Texture imagemVoltar;
+	Rectangle botaoVoltar;
+
+	Texture imagemMensagem;
+	Texture imagemLixeiraAzul;
+	Texture imagemLixeiraMarrom;
+	Texture imagemLixeiraVerde;
+	Texture imagemLixeiraVermelha;
 
     public TutorialScreen(final Drop passed_game) {
         jogo = passed_game;
@@ -29,15 +42,24 @@ class TutorialScreen implements Screen {
 		jogo.batch.setProjectionMatrix(camera.combined);
 		
 		jogo.batch.begin();
-		jogo.font.draw(jogo.batch, "Lixeira azul: papel\nLixeira verde: vidro\nLixeira marrom: orgânico\nLixeira vermelha: plástico", 100, 400);
-		jogo.font.draw(jogo.batch, "Para mover use as teclas S, D, J e K ou clique com o mouse no lugar desejado", 100, 300);
-        jogo.font.draw(jogo.batch, "Clique em qualquer lugar para voltar para a tela inicial", 100, 200);
+		jogo.batch.draw(imagemLixeiraAzul, 100, 300, 80, 80);
+		jogo.batch.draw(imagemLixeiraVerde, 200, 300, 80, 80);
+		jogo.batch.draw(imagemLixeiraMarrom, 300, 300, 80, 80);
+		jogo.batch.draw(imagemLixeiraVermelha, 400, 300, 80, 80);
+
+		jogo.batch.draw(imagemMensagem, 100, 200, 400, 80);
+        jogo.batch.draw(imagemVoltar, botaoVoltar.x, botaoVoltar.y, botaoVoltar.width, botaoVoltar.height);
 		jogo.batch.end();
 
-		// Ao clicar com o mouse volta pra tela inicial
+		// Verifica se o botão foi clicado
 		if (Gdx.input.isTouched()) {
-			jogo.setScreen(new MainMenuScreen(jogo));
-			dispose();
+			Vector3 posicao = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(posicao);
+
+			if (botaoVoltar.contains(posicao.x, posicao.y)) {
+				jogo.setScreen(new MainMenuScreen(jogo));
+				dispose();
+			}
 		}
 
 	}
@@ -51,8 +73,15 @@ class TutorialScreen implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		imagemVoltar = new Texture(Gdx.files.internal("img_voltar.png"));
+		botaoVoltar = new Rectangle(100, 100, 200, 80);
+
+		imagemMensagem = new Texture(Gdx.files.internal("img_mensagem.png"));
 		
+		imagemLixeiraAzul = new Texture(Gdx.files.internal("lixeira_azul.png"));
+		imagemLixeiraVermelha = new Texture(Gdx.files.internal("lixeira_vermelha.png"));
+		imagemLixeiraVerde = new Texture(Gdx.files.internal("lixeira_verde.png"));
+		imagemLixeiraMarrom = new Texture(Gdx.files.internal("lixeira_marrom.png"));
 	}
 
 	@Override

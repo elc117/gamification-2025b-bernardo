@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 
 public class EndScreen implements Screen {
     final Drop jogo;
@@ -13,6 +16,9 @@ public class EndScreen implements Screen {
 	private int HEIGHT = 480;
 	
 	OrthographicCamera camera;
+	
+	Texture imagemVoltarMenu;
+	Rectangle botaoVoltarMenu;
 
 	public EndScreen(final Drop passed_game, int pontuacao) {
 		jogo = passed_game;
@@ -31,13 +37,18 @@ public class EndScreen implements Screen {
 		
 		jogo.batch.begin();
 		jogo.font.draw(jogo.batch, "Pontuação final: " + pontuacaoFinal, 100, 400);
-		jogo.font.draw(jogo.batch, "Clique para jogar novamente", 100, 300);
+		jogo.batch.draw(imagemVoltarMenu, botaoVoltarMenu.x, botaoVoltarMenu.y, botaoVoltarMenu.width, botaoVoltarMenu.height);
 		jogo.batch.end();
 
-		// Ao clicar na tela volta pra tela inicial
+		// Verifica se o botão foi clicado
 		if (Gdx.input.isTouched()) {
-			jogo.setScreen(new MainMenuScreen(jogo));
-			dispose();
+			Vector3 posicao = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(posicao);
+
+			if (botaoVoltarMenu.contains(posicao.x, posicao.y)) {
+				jogo.setScreen(new MainMenuScreen(jogo));
+				dispose();
+			}
 		}
 
 	}
@@ -51,7 +62,8 @@ public class EndScreen implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		imagemVoltarMenu = new Texture(Gdx.files.internal("img_voltar_menu.png"));
+		botaoVoltarMenu = new Rectangle(100, 100, 200, 80);
 		
 	}
 

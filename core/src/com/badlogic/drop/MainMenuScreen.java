@@ -14,9 +14,15 @@ public class MainMenuScreen implements Screen {
 	static private int HEIGHT = 480;
 
 	Texture imagemTutorial;
+	Rectangle botaoJogar;
+
 	Texture imagemJogar;
 	Rectangle botaoTutorial;
-	Rectangle botaoJogar;
+
+	Texture imagemLixeiraVermelha;
+	Texture imagemLixeiraAzul;
+	Texture imagemLixeiraMarrom;
+	Texture imagemLixeiraVerde;
 	
 	OrthographicCamera camera;
 	
@@ -68,11 +74,12 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void show() {
 		imagemJogar = new Texture(Gdx.files.internal("img_jogar.png"));
-		botaoJogar = new Rectangle(100, 300, 200, 80);
+		botaoJogar = new Rectangle(300, 300, 200, 80);
 
 		imagemTutorial = new Texture(Gdx.files.internal("img_tutorial.png"));
-		botaoTutorial = new Rectangle(100, 200, 200, 80);
+		botaoTutorial = new Rectangle(300, 200, 200, 80);
 		
+
 	}
 
 	@Override
