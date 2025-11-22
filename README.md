@@ -75,6 +75,20 @@ Eles foram feitos com uma imagem e com detecção de clique na tela. Se o usuár
 Essa ideia de não usar o `Button` e fazer de maneira manual foi dada pela IA depois de eu pedir algo simples para criar um botão. Ela me forneceu um
 exemplo genérico de uso e eu adaptei para meu código.
 
+## 22/11/25
+
+Melhorei a maneira de mostrar a pontuação no final do jogo, mudei para porcentagem ao invés de número de acertos.
+
+Outra mudança que fiz foi retirar o método `dispose()` antes de mudar de tela. Na classe GameScreen, antes de mudar para o final do jogo, isso estava causando
+que os sons de erro e acerto fossem liberados antes do que deviam e, por isso, o último resíduo não tinha som de acerto/erro.
+
+Depois dessas correções, decidi que deveria adicionar mais opções de resíduos para o jogo. Fiz isso e decidi colocar uma 5° lixeira para deixar o
+jogo mais completo. 
+
+Além disso, coloquei um botão na tela de jogo para voltar para o menu principal. O intuito disso foi dar mais controle ao jogador para navegar entre as telas, caso
+ele queira recomeçar do zero ou voltar para ler o tutorial, por exemplo.
+
+
 
 ## Instruções para rodar o jogo
 
