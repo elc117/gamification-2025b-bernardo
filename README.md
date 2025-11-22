@@ -77,7 +77,7 @@ exemplo genérico de uso e eu adaptei para meu código.
 
 ## 22/11/25
 
-Melhorei a maneira de mostrar a pontuação no final do jogo, mudei para porcentagem ao invés de número de acertos.
+Mudei a maneira de mostrar a pontuação no final do jogo de número de acertos para porcentagem de acertos.
 
 Outra mudança que fiz foi retirar o método `dispose()` antes de mudar de tela. Na classe GameScreen, antes de mudar para o final do jogo, isso estava causando
 que os sons de erro e acerto fossem liberados antes do que deviam e, por isso, o último resíduo não tinha som de acerto/erro.
