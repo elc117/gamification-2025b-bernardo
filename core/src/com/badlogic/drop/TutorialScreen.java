@@ -25,6 +25,7 @@ class TutorialScreen implements Screen {
 	Texture imagemLixeiraMarrom;
 	Texture imagemLixeiraVerde;
 	Texture imagemLixeiraVermelha;
+	Texture imagemLixeiraAmarela;
 
     public TutorialScreen(final Drop passed_game) {
         jogo = passed_game;
@@ -46,6 +47,7 @@ class TutorialScreen implements Screen {
 		jogo.batch.draw(imagemLixeiraVerde, 200, 300, 80, 80);
 		jogo.batch.draw(imagemLixeiraMarrom, 300, 300, 80, 80);
 		jogo.batch.draw(imagemLixeiraVermelha, 400, 300, 80, 80);
+		jogo.batch.draw(imagemLixeiraAmarela, 500, 300, 80, 80);
 
 		jogo.batch.draw(imagemMensagem, 100, 200, 400, 80);
         jogo.batch.draw(imagemVoltar, botaoVoltar.x, botaoVoltar.y, botaoVoltar.width, botaoVoltar.height);
@@ -81,6 +83,7 @@ class TutorialScreen implements Screen {
 		imagemLixeiraVermelha = new Texture(Gdx.files.internal("lixeira_vermelha.png"));
 		imagemLixeiraVerde = new Texture(Gdx.files.internal("lixeira_verde.png"));
 		imagemLixeiraMarrom = new Texture(Gdx.files.internal("lixeira_marrom.png"));
+		imagemLixeiraAmarela = new Texture(Gdx.files.internal("lixeira_amarela.png"));
 	}
 
 	@Override
@@ -91,6 +94,7 @@ class TutorialScreen implements Screen {
 	 	imagemLixeiraMarrom.dispose();
 	 	imagemLixeiraVerde.dispose();
 	 	imagemLixeiraVermelha.dispose();
+		imagemLixeiraAmarela.dispose();
 		
 	}
 

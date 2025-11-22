@@ -21,10 +21,14 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class GameScreen implements Screen {
 	final Drop jogo;
 	
+	Texture imagemVoltarMenu;
+	Rectangle botaoVoltarMenu;
+
 	Reciclagem lixeiraAzul;
 	Reciclagem lixeiraVerde;
 	Reciclagem lixeiraMarrom;
 	Reciclagem lixeiraVermelha;
+	Reciclagem lixeiraAmarela;
 	ListaReciclagem residuos;
 	Reciclagem residuoAtual;
 	Sound somAcerto;
@@ -44,7 +48,7 @@ public class GameScreen implements Screen {
 		lixeiraVerde = new Reciclagem(new Texture (Gdx.files.internal("lixeira_verde.png")), new Rectangle(), "vidro");
 		lixeiraMarrom = new Reciclagem(new Texture (Gdx.files.internal("lixeira_marrom.png")), new Rectangle(), "organico");
 		lixeiraVermelha = new Reciclagem(new Texture (Gdx.files.internal("lixeira_vermelha.png")), new Rectangle(), "plastico");
-
+		lixeiraAmarela = new Reciclagem(new Texture (Gdx.files.internal("lixeira_amarela.png")), new Rectangle(), "metal");
 		
 		// Carrega os sons de acerto e erro
 		somAcerto = Gdx.audio.newSound(Gdx.files.internal("resposta_certa.mp3"));
@@ -88,6 +92,9 @@ public class GameScreen implements Screen {
 		jogo.batch.draw(lixeiraVerde.imagem, lixeiraVerde.objeto.x, lixeiraVerde.objeto.y, lixeiraVerde.objeto.width, lixeiraVerde.objeto.height);
 		jogo.batch.draw(lixeiraMarrom.imagem, lixeiraMarrom.objeto.x, lixeiraMarrom.objeto.y, lixeiraMarrom.objeto.width, lixeiraMarrom.objeto.height);
 		jogo.batch.draw(lixeiraVermelha.imagem, lixeiraVermelha.objeto.x, lixeiraVermelha.objeto.y, lixeiraVermelha.objeto.width, lixeiraVermelha.objeto.height);
+		jogo.batch.draw(lixeiraAmarela.imagem, lixeiraAmarela.objeto.x, lixeiraAmarela.objeto.y, lixeiraAmarela.objeto.width, lixeiraAmarela.objeto.height);
+		jogo.batch.draw(imagemVoltarMenu, botaoVoltarMenu.x, botaoVoltarMenu.y, botaoVoltarMenu.width, botaoVoltarMenu.height);
+
 
 		// Desenha o resíduo atual
 		jogo.batch.draw(residuoAtual.imagem, residuoAtual.objeto.x, residuoAtual.objeto.y, residuoAtual.objeto.width, residuoAtual.objeto.height);
@@ -99,6 +106,12 @@ public class GameScreen implements Screen {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
 			residuoAtual.objeto.x = touchPos.x - residuoAtual.objeto.width / 2;
+
+			// Verifica se clicou no botão para voltar ao menu
+			if (botaoVoltarMenu.contains(touchPos.x, touchPos.y)) {
+				jogo.setScreen(new MainMenuScreen(jogo));
+			}
+
 		}
 		
 		// Processa movimento com o teclado
@@ -110,6 +123,8 @@ public class GameScreen implements Screen {
 			residuoAtual.objeto.x = 300;
 		if (Gdx.input.isKeyPressed(Keys.K))
 			residuoAtual.objeto.x = 400;
+		if (Gdx.input.isKeyPressed(Keys.L))
+			residuoAtual.objeto.x = 500;
 
 
 		// Impede que ultrapasse o limite da tela
@@ -124,6 +139,7 @@ public class GameScreen implements Screen {
 		lixeiraVerde.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
 		lixeiraMarrom.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
 		lixeiraVermelha.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
+		lixeiraAmarela.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
 
 		if (proximoResiduo() == 1) {
 			indice++;
@@ -144,7 +160,7 @@ public class GameScreen implements Screen {
 			return 1;
 		}
 
-		if (verificarELidarColisao(residuoAtual, lixeiraAzul) == 1 || verificarELidarColisao(residuoAtual, lixeiraVerde) == 1 || verificarELidarColisao(residuoAtual, lixeiraMarrom) == 1 || verificarELidarColisao(residuoAtual, lixeiraVermelha) == 1) {
+		if (verificarELidarColisao(residuoAtual, lixeiraAzul) == 1 || verificarELidarColisao(residuoAtual, lixeiraVerde) == 1 || verificarELidarColisao(residuoAtual, lixeiraMarrom) == 1 || verificarELidarColisao(residuoAtual, lixeiraVermelha) == 1 || verificarELidarColisao(residuoAtual, lixeiraAmarela) == 1) {
 			return 1;
 		}
 
@@ -156,10 +172,11 @@ public class GameScreen implements Screen {
 		lixeiraVerde.objeto.y = 400;
 		lixeiraMarrom.objeto.y = 400;
 		lixeiraVermelha.objeto.y = 400;
+		lixeiraAmarela.objeto.y = 400;
 	}
 
 	private void spawnResiduo(Reciclagem r) {
-		r.objeto.x = 500;
+		r.objeto.x = 600;
 		r.objeto.y = 40;
 		r.objeto.width = 64;
 		r.objeto.height = 64;
@@ -185,6 +202,7 @@ public class GameScreen implements Screen {
 		lixeiraVerde.imagem.dispose();
 		lixeiraVermelha.imagem.dispose();
 		lixeiraMarrom.imagem.dispose();
+		lixeiraAmarela.imagem.dispose();
 		somAcerto.dispose();
 		somErro.dispose();
 
@@ -202,7 +220,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		imagemVoltarMenu = new Texture(Gdx.files.internal("img_voltar_menu.png"));
+		botaoVoltarMenu = new Rectangle(600, 400, 200, 80);
 		
 	}
 

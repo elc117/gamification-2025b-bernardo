@@ -34,6 +34,9 @@ public class Reciclagem {
         else if (tipo.equals("plastico")) {
             this.objeto.x = 400;
         }
+        else if (tipo.equals("metal")) {
+            this.objeto.x = 500;
+        }
 
     }
 
