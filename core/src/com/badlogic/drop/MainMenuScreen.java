@@ -52,12 +52,10 @@ public class MainMenuScreen implements Screen {
 
 			if (botaoJogar.contains(posicao.x, posicao.y)) {
 				jogo.setScreen(new GameScreen(jogo));
-				dispose();
 			}
 
 			if (botaoTutorial.contains(posicao.x, posicao.y)) {
 				jogo.setScreen(new TutorialScreen(jogo));
-				dispose();
 			}
 
 		}
@@ -83,6 +81,17 @@ public class MainMenuScreen implements Screen {
 	}
 
 	@Override
+	public void dispose() {
+		imagemTutorial.dispose();
+		imagemJogar.dispose();
+		imagemLixeiraVermelha.dispose();
+		imagemLixeiraAzul.dispose();
+		imagemLixeiraMarrom.dispose();
+		imagemLixeiraVerde.dispose();
+		
+	}
+
+	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
 		
@@ -90,12 +99,6 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
 		// TODO Auto-generated method stub
 		
 	}

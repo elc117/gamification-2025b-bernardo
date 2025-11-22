@@ -58,7 +58,6 @@ class TutorialScreen implements Screen {
 
 			if (botaoVoltar.contains(posicao.x, posicao.y)) {
 				jogo.setScreen(new MainMenuScreen(jogo));
-				dispose();
 			}
 		}
 
@@ -85,6 +84,17 @@ class TutorialScreen implements Screen {
 	}
 
 	@Override
+	public void dispose() {
+		imagemVoltar.dispose();
+	 	imagemMensagem.dispose();
+	 	imagemLixeiraAzul.dispose();
+	 	imagemLixeiraMarrom.dispose();
+	 	imagemLixeiraVerde.dispose();
+	 	imagemLixeiraVermelha.dispose();
+		
+	}
+
+	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
 		
@@ -92,12 +102,6 @@ class TutorialScreen implements Screen {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 public class EndScreen implements Screen {
     final Drop jogo;
 
-	int pontuacaoFinal;
+	float pontuacaoFinal;
 	private int WIDTH = 800;
 	private int HEIGHT = 480;
 	
@@ -20,9 +20,10 @@ public class EndScreen implements Screen {
 	Texture imagemVoltarMenu;
 	Rectangle botaoVoltarMenu;
 
-	public EndScreen(final Drop passed_game, int pontuacao) {
+	public EndScreen(final Drop passed_game, int acertos, int total) {
 		jogo = passed_game;
-		pontuacaoFinal = pontuacao;
+		pontuacaoFinal = ((float) acertos / (float) total) * 100;
+		pontuacaoFinal = (int) pontuacaoFinal;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 	}
@@ -36,7 +37,7 @@ public class EndScreen implements Screen {
 		jogo.batch.setProjectionMatrix(camera.combined);
 		
 		jogo.batch.begin();
-		jogo.font.draw(jogo.batch, "Pontuação final: " + pontuacaoFinal, 100, 400);
+		jogo.font.draw(jogo.batch, "Pontuação final: " + pontuacaoFinal + "%", 100, 400);
 		jogo.batch.draw(imagemVoltarMenu, botaoVoltarMenu.x, botaoVoltarMenu.y, botaoVoltarMenu.width, botaoVoltarMenu.height);
 		jogo.batch.end();
 
@@ -47,7 +48,6 @@ public class EndScreen implements Screen {
 
 			if (botaoVoltarMenu.contains(posicao.x, posicao.y)) {
 				jogo.setScreen(new MainMenuScreen(jogo));
-				dispose();
 			}
 		}
 
@@ -81,7 +81,7 @@ public class EndScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		imagemVoltarMenu.dispose();
 		
 	}
 

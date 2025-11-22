@@ -125,20 +125,30 @@ public class GameScreen implements Screen {
 		lixeiraMarrom.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
 		lixeiraVermelha.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
 
-		// Verifica se chegou no final da tela
-		if (lixeiraAzul.objeto.y < -64) {
-			somErro.play();
-			reposicionaLixeiras();
+		if (proximoResiduo() == 1) {
 			indice++;
+			if (indice == residuos.tamanho()) {
+				jogo.setScreen(new EndScreen(jogo, pontos, residuos.tamanho()));
+				return;
+			}
+			reposicionaLixeiras();
 			residuoAtual = residuos.elemento(indice);
 			spawnResiduo(residuoAtual);
 		}
 
-		// Verifica se acertou e lida com a colisão
-		verificarELidarColisao(residuoAtual, lixeiraAzul);
-		verificarELidarColisao(residuoAtual, lixeiraVerde);
-		verificarELidarColisao(residuoAtual, lixeiraMarrom);
-		verificarELidarColisao(residuoAtual, lixeiraVermelha);
+	}
+
+	private int proximoResiduo() {
+		if (lixeiraAzul.objeto.y < -64) {
+			somErro.play();
+			return 1;
+		}
+
+		if (verificarELidarColisao(residuoAtual, lixeiraAzul) == 1 || verificarELidarColisao(residuoAtual, lixeiraVerde) == 1 || verificarELidarColisao(residuoAtual, lixeiraMarrom) == 1 || verificarELidarColisao(residuoAtual, lixeiraVermelha) == 1) {
+			return 1;
+		}
+
+		return 0;
 	}
 
 	private void reposicionaLixeiras() {
@@ -155,7 +165,7 @@ public class GameScreen implements Screen {
 		r.objeto.height = 64;
 	}
 
-	private void verificarELidarColisao(Reciclagem residuo, Reciclagem lixeira) {
+	private int verificarELidarColisao(Reciclagem residuo, Reciclagem lixeira) {
 		if (residuo.objeto.overlaps(lixeira.objeto)) {
 			if (residuo.tipo.equals(lixeira.tipo)) {
 				somAcerto.play();
@@ -164,34 +174,24 @@ public class GameScreen implements Screen {
 			else {
 				somErro.play();
 			}
-			
-			// Remove da tela
-			residuo.objeto.y -= 100;
-
-			// Gera o próximo resíduo
-			indice++;
-			if (indice == residuos.tamanho()) {
-				dispose();
-				jogo.setScreen(new EndScreen(jogo, pontos));
-				return;
-			}
-			reposicionaLixeiras();
-			residuoAtual = residuos.elemento(indice);
-			spawnResiduo(residuoAtual);
+			return 1;
 		}
+		return 0;
 	}
 
 	@Override
 	public void dispose() {
-		// Clear all the "native" resources
-		// Libera (alguma coisa)
-		// lixeiraAzul.dispose();
-		// lixeiraVerde.dispose();
-		// lixeiraVermelha.dispose();
-		// lixeiraMarrom.dispose();
+		lixeiraAzul.imagem.dispose();
+		lixeiraVerde.imagem.dispose();
+		lixeiraVermelha.imagem.dispose();
+		lixeiraMarrom.imagem.dispose();
 		somAcerto.dispose();
 		somErro.dispose();
-		batch.dispose();
+
+		for (int i = 0; i < residuos.tamanho(); i++) {
+			residuos.elemento(i).imagem.dispose();
+		}
+
 	}
 
 	@Override
