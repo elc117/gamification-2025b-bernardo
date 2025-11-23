@@ -23,6 +23,7 @@ public class MainMenuScreen implements Screen {
 	Texture imagemLixeiraAzul;
 	Texture imagemLixeiraMarrom;
 	Texture imagemLixeiraVerde;
+	Texture imagemPrincipal;
 	
 	OrthographicCamera camera;
 	
@@ -40,6 +41,7 @@ public class MainMenuScreen implements Screen {
 		jogo.batch.setProjectionMatrix(camera.combined);
 		
 		jogo.batch.begin();
+		jogo.batch.draw(imagemPrincipal, 300, 380, 200, 80);
 		jogo.batch.draw(imagemJogar, botaoJogar.x, botaoJogar.y, botaoJogar.width, botaoJogar.height);
 		jogo.batch.draw(imagemTutorial, botaoTutorial.x, botaoTutorial.y, botaoTutorial.width, botaoTutorial.height);
 		jogo.batch.end();
@@ -77,6 +79,7 @@ public class MainMenuScreen implements Screen {
 		imagemTutorial = new Texture(Gdx.files.internal("img_tutorial.png"));
 		botaoTutorial = new Rectangle(300, 200, 200, 80);
 		
+		imagemPrincipal = new Texture(Gdx.files.internal("img_mensagem_principal.png"));
 
 	}
 
@@ -88,6 +91,7 @@ public class MainMenuScreen implements Screen {
 		imagemLixeiraAzul.dispose();
 		imagemLixeiraMarrom.dispose();
 		imagemLixeiraVerde.dispose();
+		imagemPrincipal.dispose();
 		
 	}
 

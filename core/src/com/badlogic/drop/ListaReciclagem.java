@@ -4,20 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
-public class ListaReciclagem {
-    Array<Reciclagem> lista;
+public class ListaReciclagem extends Lista<Reciclagem> {
 
-
-    public ListaReciclagem() {
-        lista = new Array<>();
-
-    }
-
-    // Métodos
+    @Override
     public void adicionarElementos() {
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("caixa_papelao.png")), new Rectangle(), "papel", 500, 40));
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("papel.png")), new Rectangle(), "papel", 500, 40));
@@ -48,19 +40,6 @@ public class ListaReciclagem {
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("refrigerante.png")), new Rectangle(), "metal", 600, 40));
         lista.add(new Reciclagem(new Texture (Gdx.files.internal("lata_aluminio.png")), new Rectangle(), "metal", 600, 40));
 
-
     }
-
-    public void embaralhar() {
-        lista.shuffle();
-    }
-
-    public Reciclagem elemento(int indice) {
-        return lista.get(indice);
-    }
-
-    public int tamanho() {
-        return lista.size;
-    }
-
+    
 }

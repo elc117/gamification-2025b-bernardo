@@ -76,9 +76,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		/* Clear screen with a dark blue color.
-		 * Arguments to ClearColor are r g b, alpha
-		 */
 		Gdx.gl.glClearColor(0.95f, 0.8f, 0.6f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
