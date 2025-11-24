@@ -97,14 +97,14 @@ ser alcançado.
 Para isso, criei uma classe `ListaDesafios`. Mas como ela teria as mesmas coisas que a lista `ListaReciclagem`, 
 decidi criar uma classe abstrata `Lista`.
 
-`
+```java
 abstract class Lista {
     Array<> lista = new Array<>;
 
     public void embaralhar() {
         lista.shuffle();
     }
-
+ 
     public ? elemento(int indice) {
         return lista.get(indice);
     }
@@ -115,7 +115,7 @@ abstract class Lista {
 
     public abstract void adicionarElementos();
 }
-`
+```
 
 No método `elemento(int indice)`, por exemplo, não sabia como poderia especificar o tipo de retorno, já
 que poderia ser tanto String (no caso de ListaDesafio) ou Reciclagem (no caso de ListaReciclagem). A solução
