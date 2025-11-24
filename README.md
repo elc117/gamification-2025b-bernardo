@@ -89,6 +89,48 @@ Além disso, coloquei um botão na tela de jogo para voltar para o menu principa
 ele queira recomeçar do zero ou voltar para ler o tutorial, por exemplo.
 
 
+## 23/11/25
+
+Comecei a criar uma opção de "desafio" para o jogador. A ideia é que cada jogo tenha um desafio para
+ser alcançado.
+
+Para isso, criei uma classe `ListaDesafios`. Mas como ela teria as mesmas coisas que a lista `ListaReciclagem`, 
+decidi criar uma classe abstrata `Lista`.
+
+`
+abstract class Lista {
+    Array<> lista = new Array<>;
+
+    public void embaralhar() {
+        lista.shuffle();
+    }
+
+    public ? elemento(int indice) {
+        return lista.get(indice);
+    }
+
+    public int tamanho() {
+        return lista.size;
+    }
+
+    public abstract void adicionarElementos();
+}
+`
+
+No método `elemento(int indice)`, por exemplo, não sabia como poderia especificar o tipo de retorno, já
+que poderia ser tanto String (no caso de ListaDesafio) ou Reciclagem (no caso de ListaReciclagem). A solução
+encontrada foi usar algo chamado de `Generics`, que permite representar um tipo genérico. No caso do código, 
+eu adicionei `<T>` para permitir que a classe receba um "tipo" T.
+
+`abstract class Lista<T> { `
+
+`Array<T> lista = new Array<>;`
+
+e `public T elemento(int indice) `
+
+Assim, funciona tanto para ListaReciclagem quanto ListaDesafios.
+
+
 
 ## Instruções para rodar o jogo
 
