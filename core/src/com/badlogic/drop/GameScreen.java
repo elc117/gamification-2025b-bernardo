@@ -39,10 +39,27 @@ public class GameScreen implements Screen {
 	Vector3 touchPos;
 	int pontos;
 	int indice;
-	
-	public GameScreen(final Drop passed_game) {
+
+	String desafio;
+	boolean desafioAlcancado;
+	int acertosSeguidos;
+	int desafioPapel;
+	int desafioVidro;
+	int desafioPlastico;
+	int desafioOrganico;
+
+
+	public GameScreen(final Drop passed_game, String desafio) {
 		jogo = passed_game; 
 		pontos = 0;
+		this.desafio = desafio;
+
+		// Inicializa atributos para validar os desafios
+		acertosSeguidos = 0;
+		desafioPapel = 0;
+		desafioVidro = 0;
+		desafioPlastico = 0;
+		desafioOrganico = 0;
 
 		lixeiraAzul = new Reciclagem(new Texture (Gdx.files.internal("lixeira_azul.png")), new Rectangle(), "papel");
 		lixeiraVerde = new Reciclagem(new Texture (Gdx.files.internal("lixeira_verde.png")), new Rectangle(), "vidro");
@@ -141,13 +158,33 @@ public class GameScreen implements Screen {
 		if (proximoResiduo() == 1) {
 			indice++;
 			if (indice == residuos.tamanho()) {
-				jogo.setScreen(new EndScreen(jogo, pontos, residuos.tamanho()));
+				pontos = (int) ((pontos * 100) / residuos.tamanho());
+				desafioAlcancado = verificarDesafio();
+				jogo.setScreen(new EndScreen(jogo, pontos, desafio, desafioAlcancado));
 				return;
 			}
 			reposicionaLixeiras();
 			residuoAtual = residuos.elemento(indice);
 			spawnResiduo(residuoAtual);
 		}
+
+	}
+
+	private boolean verificarDesafio() {
+		if (desafio.equals("Acertar 5 resíduos seguidos") && acertosSeguidos >= 5) return true;
+		if (desafio.equals("Acertar 10 resíduos seguidos") && acertosSeguidos >= 10) return true;
+		if (desafio.equals("Acertar 15 resíduos seguidos") && acertosSeguidos >= 15) return true;
+
+		if (desafio.equals("Acertar todos resíduos do tipo papel") && desafioPapel == 4) return true;
+		if (desafio.equals("Acertar todos resíduos do tipo vidro") && desafioVidro == 4) return true;
+		if (desafio.equals("Acertar todos resíduos do tipo plastico") && desafioPlastico == 5) return true;
+		if (desafio.equals("Acertar todos resíduos do tipo organico") && desafioOrganico == 5) return true;
+
+		if (desafio.equals("Obter pontuação maior que 50%") && pontos > 50) return true;
+		if (desafio.equals("Obter pontuação maior que 70%") && pontos > 70) return true;
+		if (desafio.equals("Obter pontuação maior que 90%") && pontos > 90) return true;
+
+		return false;
 
 	}
 
@@ -182,10 +219,18 @@ public class GameScreen implements Screen {
 	private int verificarELidarColisao(Reciclagem residuo, Reciclagem lixeira) {
 		if (residuo.objeto.overlaps(lixeira.objeto)) {
 			if (residuo.tipo.equals(lixeira.tipo)) {
+
+				acertosSeguidos++;
+				if (residuo.tipo.equals("papel")) desafioPapel++;
+				else if (residuo.tipo.equals("plastico")) desafioPlastico++;
+				else if (residuo.tipo.equals("organico")) desafioOrganico++;
+				else if (residuo.tipo.equals("vidro")) desafioVidro++;
+
 				somAcerto.play();
 				pontos++;
 			}
 			else {
+				acertosSeguidos = 0;
 				somErro.play();
 			}
 			return 1;

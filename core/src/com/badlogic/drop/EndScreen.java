@@ -12,6 +12,8 @@ public class EndScreen implements Screen {
     final Drop jogo;
 
 	float pontuacaoFinal;
+	String desafio;
+	boolean desafioAlcancado;
 	private int WIDTH = 800;
 	private int HEIGHT = 480;
 	
@@ -20,10 +22,13 @@ public class EndScreen implements Screen {
 	Texture imagemVoltarMenu;
 	Rectangle botaoVoltarMenu;
 
-	public EndScreen(final Drop passed_game, int acertos, int total) {
+	public EndScreen(final Drop passed_game, int pontuacao, String desafio, boolean conseguiu) {
 		jogo = passed_game;
-		pontuacaoFinal = ((float) acertos / (float) total) * 100;
-		pontuacaoFinal = (int) pontuacaoFinal;
+		pontuacaoFinal = pontuacao;
+
+		this.desafio = desafio;
+		desafioAlcancado = conseguiu;
+
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 	}
@@ -38,6 +43,19 @@ public class EndScreen implements Screen {
 		
 		jogo.batch.begin();
 		jogo.font.draw(jogo.batch, "Pontuação final: " + pontuacaoFinal + "%", 100, 400);
+
+		if (desafioAlcancado == true) {
+			jogo.font.setColor(0,1,0,1);	// verde
+			jogo.font.draw(jogo.batch, "Parabéns! Você alcançou o desafio: " + desafio, 100, 300);
+			jogo.font.setColor(0,1,0,1);	// reseta para preto
+		}
+
+		else {
+			jogo.font.setColor(1,0,0,1);	// vermelho
+			jogo.font.draw(jogo.batch, "Você não alcançou o desafio: " + desafio, 100, 300);
+			jogo.font.setColor(0,1,0,1);	// reseta para preto
+		}
+		
 		jogo.batch.draw(imagemVoltarMenu, botaoVoltarMenu.x, botaoVoltarMenu.y, botaoVoltarMenu.width, botaoVoltarMenu.height);
 		jogo.batch.end();
 

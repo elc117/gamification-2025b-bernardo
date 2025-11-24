@@ -56,6 +56,7 @@ public class MainMenuScreen implements Screen {
 		jogo.batch.draw(imagemPrincipal, 300, 380, 200, 80);
 		jogo.batch.draw(imagemJogar, botaoJogar.x, botaoJogar.y, botaoJogar.width, botaoJogar.height);
 		jogo.batch.draw(imagemTutorial, botaoTutorial.x, botaoTutorial.y, botaoTutorial.width, botaoTutorial.height);
+		jogo.font.setColor(0, 0, 0, 1);	// preto
 		jogo.font.draw(jogo.batch, "Desafio: " + desafioAtual, 120, 100);
 		jogo.batch.draw(imagemDesafio, botaoDesafio.x, botaoDesafio.y, botaoDesafio.width, botaoDesafio.height);
 		jogo.batch.end();
@@ -67,7 +68,7 @@ public class MainMenuScreen implements Screen {
 			camera.unproject(posicao);
 
 			if (botaoJogar.contains(posicao.x, posicao.y)) {
-				jogo.setScreen(new GameScreen(jogo));
+				jogo.setScreen(new GameScreen(jogo, desafioAtual));
 			}
 
 			if (botaoTutorial.contains(posicao.x, posicao.y)) {
