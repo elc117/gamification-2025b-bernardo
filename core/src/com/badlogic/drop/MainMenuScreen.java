@@ -8,10 +8,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
+
 public class MainMenuScreen implements Screen {
 	final Drop jogo;
 	static private int WIDTH = 800;
 	static private int HEIGHT = 480;
+	ListaDesafios lista;
+	String desafioAtual;
 
 	Texture imagemTutorial;
 	Rectangle botaoJogar;
@@ -19,10 +22,9 @@ public class MainMenuScreen implements Screen {
 	Texture imagemJogar;
 	Rectangle botaoTutorial;
 
-	Texture imagemLixeiraVermelha;
-	Texture imagemLixeiraAzul;
-	Texture imagemLixeiraMarrom;
-	Texture imagemLixeiraVerde;
+	Texture imagemDesafio;
+	Rectangle botaoDesafio;
+
 	Texture imagemPrincipal;
 	
 	OrthographicCamera camera;
@@ -31,8 +33,18 @@ public class MainMenuScreen implements Screen {
 		jogo = passed_game;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
+
+		lista = new ListaDesafios();
+		lista.adicionarElementos();
+		gerarDesafioAleatorio();
+
 	}
 	
+	private void gerarDesafioAleatorio() {
+		lista.embaralhar();
+		desafioAtual = lista.elemento(0);
+	} 
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.6f, 0.8f, 0.6f, 1);
@@ -44,6 +56,8 @@ public class MainMenuScreen implements Screen {
 		jogo.batch.draw(imagemPrincipal, 300, 380, 200, 80);
 		jogo.batch.draw(imagemJogar, botaoJogar.x, botaoJogar.y, botaoJogar.width, botaoJogar.height);
 		jogo.batch.draw(imagemTutorial, botaoTutorial.x, botaoTutorial.y, botaoTutorial.width, botaoTutorial.height);
+		jogo.font.draw(jogo.batch, "Desafio: " + desafioAtual, 120, 100);
+		jogo.batch.draw(imagemDesafio, botaoDesafio.x, botaoDesafio.y, botaoDesafio.width, botaoDesafio.height);
 		jogo.batch.end();
 		
 		// Verifica se uma das opções foi clicada
@@ -58,6 +72,10 @@ public class MainMenuScreen implements Screen {
 
 			if (botaoTutorial.contains(posicao.x, posicao.y)) {
 				jogo.setScreen(new TutorialScreen(jogo));
+			}
+
+			if (botaoDesafio.contains(posicao.x, posicao.y)) {
+				gerarDesafioAleatorio();
 			}
 
 		}
@@ -79,6 +97,9 @@ public class MainMenuScreen implements Screen {
 		imagemTutorial = new Texture(Gdx.files.internal("img_tutorial.png"));
 		botaoTutorial = new Rectangle(300, 200, 200, 80);
 		
+		imagemDesafio = new Texture(Gdx.files.internal("img_gerar_desafio.png"));
+		botaoDesafio = new Rectangle(500, 80, 100, 40);
+
 		imagemPrincipal = new Texture(Gdx.files.internal("img_mensagem_principal.png"));
 
 	}
@@ -87,11 +108,8 @@ public class MainMenuScreen implements Screen {
 	public void dispose() {
 		imagemTutorial.dispose();
 		imagemJogar.dispose();
-		imagemLixeiraVermelha.dispose();
-		imagemLixeiraAzul.dispose();
-		imagemLixeiraMarrom.dispose();
-		imagemLixeiraVerde.dispose();
 		imagemPrincipal.dispose();
+		imagemDesafio.dispose();
 		
 	}
 
