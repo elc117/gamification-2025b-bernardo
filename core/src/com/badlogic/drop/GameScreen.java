@@ -180,7 +180,7 @@ public class GameScreen implements Screen {
 		if (desafio.equals("Acertar todos resíduos do tipo papel") && desafioPapel == 4) return true;
 		if (desafio.equals("Acertar todos resíduos do tipo vidro") && desafioVidro == 4) return true;
 		if (desafio.equals("Acertar todos resíduos do tipo plastico") && desafioPlastico == 5) return true;
-		if (desafio.equals("Acertar todos resíduos do tipo organico") && desafioOrganico == 5) return true;
+		if (desafio.equals("Acertar todos resíduos do tipo orgânico") && desafioOrganico == 5) return true;
 
 		if (desafio.equals("Obter pontuação maior que 50%") && pontos > 50) return true;
 		if (desafio.equals("Obter pontuação maior que 70%") && pontos > 70) return true;

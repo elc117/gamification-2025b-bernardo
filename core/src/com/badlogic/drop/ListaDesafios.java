@@ -16,7 +16,7 @@ public class ListaDesafios extends Lista<String> {
         lista.add("Acertar todos resíduos do tipo papel");
         lista.add("Acertar todos resíduos do tipo vidro");
         lista.add("Acertar todos resíduos do tipo plástico");
-        lista.add("Acertar todos resíduos do tipo organico");
+        lista.add("Acertar todos resíduos do tipo orgânico");
 
         lista.add("Obter pontuação maior que 70%");
         lista.add("Obter pontuação maior que 90%");

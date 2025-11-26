@@ -62,7 +62,7 @@ public class MainMenuScreen implements Screen {
 		jogo.batch.end();
 		
 		// Verifica se uma das opções foi clicada
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.justTouched()) {
 			// Pega a posição do clique
 			Vector3 posicao = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(posicao);
