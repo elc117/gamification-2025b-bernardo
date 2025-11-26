@@ -43,6 +43,7 @@ public class GameScreen implements Screen {
 	String desafio;
 	boolean desafioAlcancado;
 	int acertosSeguidos;
+	int maiorAcerto;
 	int desafioPapel;
 	int desafioVidro;
 	int desafioPlastico;
@@ -56,6 +57,7 @@ public class GameScreen implements Screen {
 
 		// Inicializa atributos para validar os desafios
 		acertosSeguidos = 0;
+		maiorAcerto = 0;
 		desafioPapel = 0;
 		desafioVidro = 0;
 		desafioPlastico = 0;
@@ -171,9 +173,9 @@ public class GameScreen implements Screen {
 	}
 
 	private boolean verificarDesafio() {
-		if (desafio.equals("Acertar 5 resíduos seguidos") && acertosSeguidos >= 5) return true;
-		if (desafio.equals("Acertar 10 resíduos seguidos") && acertosSeguidos >= 10) return true;
-		if (desafio.equals("Acertar 15 resíduos seguidos") && acertosSeguidos >= 15) return true;
+		if (desafio.equals("Acertar 5 resíduos seguidos") && maiorAcerto >= 5) return true;
+		if (desafio.equals("Acertar 10 resíduos seguidos") && maiorAcerto >= 10) return true;
+		if (desafio.equals("Acertar 15 resíduos seguidos") && maiorAcerto >= 15) return true;
 
 		if (desafio.equals("Acertar todos resíduos do tipo papel") && desafioPapel == 4) return true;
 		if (desafio.equals("Acertar todos resíduos do tipo vidro") && desafioVidro == 4) return true;
@@ -221,6 +223,9 @@ public class GameScreen implements Screen {
 			if (residuo.tipo.equals(lixeira.tipo)) {
 
 				acertosSeguidos++;
+				if (acertosSeguidos > maiorAcerto) {
+					maiorAcerto = acertosSeguidos;
+				}
 				if (residuo.tipo.equals("papel")) desafioPapel++;
 				else if (residuo.tipo.equals("plastico")) desafioPlastico++;
 				else if (residuo.tipo.equals("organico")) desafioOrganico++;
