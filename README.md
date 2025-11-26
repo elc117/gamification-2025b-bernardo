@@ -130,7 +130,18 @@ e `public T elemento(int indice) `
 
 Assim, funciona tanto para ListaReciclagem quanto ListaDesafios.
 
+## 24/11/2025
 
+Continuei e terminei de fazer a opção de desafios. 
+
+Isso envolveu:
+
+- Adicionar a descrição do desafio na tela de menu, além de um botão para gerar outro desafio
+- Adicionar na tela final se o desafio foi alcançado ou não
+- Implementar a validação de cada desafio na classe `GameScreen()`
+- Fazer alguns ajustes nos construtores de cada classe de tela
+
+Com isso feito, o jogo está finalizado.
 
 ## Instruções para rodar o jogo
 
