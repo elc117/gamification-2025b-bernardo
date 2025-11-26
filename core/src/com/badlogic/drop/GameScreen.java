@@ -151,11 +151,11 @@ public class GameScreen implements Screen {
 		
 
 		// Move as lixeiras para baixo
-		lixeiraAzul.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
-		lixeiraVerde.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
-		lixeiraMarrom.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
-		lixeiraVermelha.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
-		lixeiraAmarela.objeto.y -= 200 * Gdx.graphics.getDeltaTime();
+		lixeiraAzul.objeto.y -= 170 * Gdx.graphics.getDeltaTime();
+		lixeiraVerde.objeto.y -= 170 * Gdx.graphics.getDeltaTime();
+		lixeiraMarrom.objeto.y -= 170 * Gdx.graphics.getDeltaTime();
+		lixeiraVermelha.objeto.y -= 170 * Gdx.graphics.getDeltaTime();
+		lixeiraAmarela.objeto.y -= 170 * Gdx.graphics.getDeltaTime();
 
 		if (proximoResiduo() == 1) {
 			indice++;
