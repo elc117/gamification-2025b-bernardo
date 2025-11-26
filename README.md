@@ -125,7 +125,7 @@ abstract class Lista {
 ```
 
 No método `elemento(int indice)`, por exemplo, não sabia como poderia especificar o tipo de retorno, já
-que poderia ser tanto String (no caso de ListaDesafio) ou Reciclagem (no caso de ListaReciclagem). A solução
+que poderia ser tanto String (no caso de ListaDesafio) ou Reciclagem (no caso de ListaReciclagem). Aqui precisei de ajuda de IA para resolver. A solução
 encontrada foi usar algo chamado de `Generics`, que permite representar um tipo genérico. No caso do código, 
 eu adicionei `<T>` para permitir que a classe receba um "tipo" T.
 
@@ -134,6 +134,11 @@ eu adicionei `<T>` para permitir que a classe receba um "tipo" T.
 `Array<T> lista = new Array<>;`
 
 e `public T elemento(int indice) `
+
+E, nas classes ListaDesafios e ListaReciclagem:
+`public class ListaDesafios extends Lista<String> {`
+
+`public class ListaReciclagem extends Lista<Reciclagem> {`
 
 Assim, funciona tanto para ListaReciclagem quanto ListaDesafios.
 
