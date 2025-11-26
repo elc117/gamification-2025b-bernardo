@@ -158,7 +158,8 @@ Com isso feito, o jogo foi finalizado.
 
 ## Diagrama de classes
 
-(terminar)
+<img width="724" height="1109" alt="diagrama" src="https://github.com/user-attachments/assets/b54dc6bc-937f-4c01-84d3-11ee6500f715" />
+
 
 ## Instruções para rodar o jogo
 
