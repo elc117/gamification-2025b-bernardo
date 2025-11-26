@@ -148,7 +148,7 @@ Isso envolveu:
 - Implementar a validação de cada desafio na classe `GameScreen()`
 - Fazer alguns ajustes nos construtores de cada classe de tela
 
-Com isso feito, o jogo está finalizado.
+Com isso feito, o jogo foi finalizado.
 
 ## Diagrama de classes
 
@@ -182,7 +182,9 @@ Com isso feito, o jogo está finalizado.
 
 ## Resultado final
 
-(terminar)
+![resultado_final](https://github.com/user-attachments/assets/e1227737-79fa-4bab-903d-2e4657ba789c)
+
+Observação: foi feito um corte no meio do jogo para diminuir o tamanho do vídeo.
 
 ## Referências
 
