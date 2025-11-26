@@ -136,6 +136,7 @@ eu adicionei `<T>` para permitir que a classe receba um "tipo" T.
 e `public T elemento(int indice) `
 
 E, nas classes ListaDesafios e ListaReciclagem:
+
 `public class ListaDesafios extends Lista<String> {`
 
 `public class ListaReciclagem extends Lista<Reciclagem> {`
